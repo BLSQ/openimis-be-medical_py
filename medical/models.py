@@ -1,6 +1,6 @@
 import uuid
 
-from core.models import VersionedModel, ObjectMutation
+from core.models import VersionedModel, ObjectMutation, ExtendableModel
 from django.db import models
 from core import models as core_models
 from django.db.models.signals import pre_save
@@ -46,7 +46,7 @@ class Diagnosis(core_models.VersionedModel):
         db_table = 'tblICDCodes'
 
 
-class ItemOrService:
+class ItemOrService(ExtendableModel, VersionedModel):
     CARE_TYPE_OUT_PATIENT = "O"
     CARE_TYPE_IN_PATIENT = "I"
     CARE_TYPE_BOTH = "B"
@@ -56,8 +56,11 @@ class ItemOrService:
 
     CARE_TYPE_VALUES = [CARE_TYPE_BOTH, CARE_TYPE_IN_PATIENT, CARE_TYPE_OUT_PATIENT]
 
+    class Meta:
+        abstract = True
 
-class Item(VersionedModel, ItemOrService):
+
+class Item(ItemOrService):
     id = models.AutoField(db_column='ItemID', primary_key=True)
     uuid = models.CharField(db_column='ItemUUID', max_length=36, default=uuid.uuid4, unique=True)
     code = models.CharField(db_column='ItemCode', max_length=ItemOrService.CODE_LENGTH)
@@ -157,7 +160,7 @@ def save_history_on_update(sender, instance, **kwargs):
         instance.validity_from = now
 
 
-class Service(VersionedModel, ItemOrService):
+class Service(ItemOrService):
     id = models.AutoField(db_column='ServiceID', primary_key=True)
     uuid = models.CharField(db_column='ServiceUUID',
                             max_length=36, default=uuid.uuid4, unique=True)
