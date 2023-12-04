@@ -265,6 +265,11 @@ class Service(ItemOrService):
     LEVEL_HOSPITAL_CARE = "H"
     LEVEL_VALUES = [LEVEL_SIMPLE_SERVICE, LEVEL_VISIT, LEVEL_DAY_HOSPITAL, LEVEL_HOSPITAL_CARE]
 
+    SPIMM_CATEGORY_EMOC = "EmOC"
+    SPIMM_CATEGORY_ECC = "ECC"
+    SPIMM_CATEGORY_ADD_ON = "Add On"
+    SPIMM_CATEGORIES = [SPIMM_CATEGORY_EMOC, SPIMM_CATEGORY_ECC, SPIMM_CATEGORY_ADD_ON]
+
 
 @receiver(pre_save, sender=Service)
 def save_history_on_update(sender, instance, **kwargs):
