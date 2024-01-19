@@ -24,6 +24,7 @@ def set_item_or_service_deleted(item_service, item_or_service_element):
 def clear_item_dict(item):
     new_dict = {
         "code": item.code,
+        "nhia_code": item.nhia_code,
         "name": item.name,
         "type": item.type,
         "price": item.price,

@@ -97,8 +97,7 @@ def reset_item_or_service_before_update(item_service):
     fields = [
         "code",
         "name",
-        "code",
-        "name",
+        "nhia_code",
         "type",
         "price",
         "frequency",
@@ -243,6 +242,7 @@ class DeleteServiceMutation(OpenIMISMutation):
 class ItemInputType(ItemOrServiceInputType):
     package = graphene.String()
     quantity = graphene.Decimal()
+    nhia_code = graphene.String()
 
 
 class CreateItemMutation(CreateOrUpdateItemOrServiceMutation):

@@ -71,6 +71,7 @@ class Item(VersionedModel, ItemOrService):
     patient_category = models.SmallIntegerField(db_column='ItemPatCat')
     audit_user_id = models.IntegerField(db_column='AuditUserID')
     # row_id = models.BinaryField(db_column='RowID', blank=True, null=True)
+    nhia_code = models.CharField(db_column='ItemNhiaCode', max_length=ItemOrService.CODE_LENGTH, blank=True, null=True)
 
     def __bool__(self):
         return self.code is not None and len(self.code) >= 1
@@ -78,6 +79,7 @@ class Item(VersionedModel, ItemOrService):
     def __eq__(self, other):
         equals = isinstance(other, Item) and \
                  self.code == other.code and \
+                 self.nhia_code == other.nhia_code and \
                  self.name == other.name and \
                  self.type == other.type and \
                  self.price == other.price and \
